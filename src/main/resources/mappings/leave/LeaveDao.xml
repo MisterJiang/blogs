@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.modules.leave.dao.LeaveDao">
+    <sql id="leaveColumns">
+        a.id AS "id",
+        a.create_time AS "createTime",
+        a.create_user AS "createUser",
+        a.leaveDate AS "leaveDate",
+        a.leaveDays AS "leaveDays",
+        a.leaveReason AS "leaveReason",
+        a.state AS "state",
+        a.processInstanceId AS "processInstanceId"
+    </sql>
+
+    <select id="get" resultType="com.modules.leave.mapper.Leave">
+        SELECT * FROM t_leave a
+        <where>
+            <if test="id != null and id !=''">
+                AND a.id = #{id}
+            </if>
+            <if test="processInstanceId != null and processInstanceId !=''">
+                AND a.processInstanceId = #{processInstanceId}
+            </if>
+        </where>
+    </select>
+
+    <select id="findPageList" resultType="com.modules.leave.mapper.Leave">
+        SELECT <include refid="leaveColumns"/> FROM t_leave a
+        ORDER BY a.create_time DESC
+    </select>
+
+    <insert id="insert">
+        INSERT INTO t_leave (
+        id,
+        create_time,
+        create_user,
+        leaveDate,
+        leaveDays,
+        leaveReason,
+        state,
+        processInstanceId
+        )
+        VALUES
+        (
+        #{id},
+        #{createTime},
+        #{createUser},
+        #{leaveDate},
+        #{leaveDays},
+        #{leaveReason},
+        #{state},
+        #{processInstanceId}
+        )
+    </insert>
+
+    <delete id="delete">
+        delete from t_leave where id = #{id};
+    </delete>
+
+    <update id="update">
+        UPDATE t_leave SET
+        create_time = #{createTime},
+        create_user = #{createUser},
+        leaveDate = #{leaveDate},
+        leaveDays = #{leaveDays},
+        leaveReason = #{leaveReason},
+        state = #{state},
+        processInstanceId = #{processInstanceId}
+        WHERE id = #{id}
+    </update>
+</mapper>

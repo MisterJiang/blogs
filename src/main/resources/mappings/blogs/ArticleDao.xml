@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.modules.blogs.dao.ArticleDao">
+    <!--
+    ehcache已经配置好了,然后只需要在想要缓存的mapper配置文件里面加入以下内容,该查询语句得到的结果将会被缓存
+    以下两个<cache>标签都可以,第一个可以输出日志,第二个不输出日志
+     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+     <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+    -->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+
+    <sql id="articleColumns">
+        a.id AS "id",
+        a.create_time AS "createTime",
+        a.create_user AS "createUser",
+        a.title AS "title",
+        a.category AS "category",
+        a.content AS "content",
+        a.keywords AS "keywords",
+        a.view AS "view",
+        a.text_view AS "textView"
+    </sql>
+
+    <select id="get" resultType="com.modules.blogs.mapper.Article">
+        SELECT * FROM t_article a
+        <where>
+            <if test="id != null and id !=''">
+                AND a.id = #{id}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="findPageList" resultType="com.modules.blogs.mapper.Article">
+        SELECT <include refid="articleColumns"/> FROM t_article a
+    </select>
+
+    <insert id="insert">
+    INSERT INTO t_article (
+        id,
+        create_time,
+        create_user,
+        title,
+        category,
+        content,
+        keywords,
+        view,
+        text_view
+    )
+    VALUES
+        (
+        #{id},
+        #{createTime},
+        #{createUser},
+        #{title},
+        #{category},
+        #{content},
+        #{keywords},
+        #{view},
+        #{textView}
+        )
+    </insert>
+
+    <delete id="delete">
+        delete from t_article where id = #{id};
+    </delete>
+
+    <update id="update">
+        UPDATE t_article SET
+         create_time = #{createTime},
+         create_user = #{createUser},
+         title = #{title},
+         category = #{category},
+         content = #{content},
+         keywords = #{keywords},
+         view = view + 1,
+         text_view = #{textView}
+        WHERE id = #{id}
+    </update>
+</mapper>

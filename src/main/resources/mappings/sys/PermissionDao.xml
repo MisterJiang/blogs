@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.modules.sys.dao.PermissionDao">
+    <sql id="permissionColumns">
+        a.id AS "id",
+        a.permissionName AS "permissionName",
+        a.roleId AS "roleId"
+    </sql>
+
+    <select id="get" resultType="com.modules.sys.mapper.Permission">
+        SELECT * FROM t_permission a
+        <where>
+            <if test="id != null and id !=''">
+                AND a.id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <select id="findPageList" resultType="com.modules.sys.mapper.Permission">
+        SELECT
+        <include refid="permissionColumns"/>
+        FROM t_permission a
+        <where>
+            <if test="id != null and id !=''">
+                AND a.id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO t_permission
+        (
+        id,
+        permissionName,
+        roleId
+        )
+        VALUES
+        (
+        #{id},
+        #{permissionName},
+        #{roleId}
+        )
+    </insert>
+</mapper>

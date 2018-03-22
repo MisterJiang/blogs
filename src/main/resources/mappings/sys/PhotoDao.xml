@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.modules.sys.dao.PhotoDao">
+
+    <!--
+    ehcache已经配置好了,然后只需要在想要缓存的mapper配置文件里面加入以下内容,该查询语句得到的结果将会被缓存
+    以下两个<cache>标签都可以,第一个可以输出日志,第二个不输出日志
+     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+     <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+    -->
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+
+    <sql id="photoColumns">
+        a.id AS "id",
+        a.create_time AS "createTime",
+        a.create_user AS "createUser",
+        a.type AS "type",
+        a.userName AS "userName",
+        a.image_Name AS "imageName"
+    </sql>
+
+    <select id="get" resultType="com.modules.sys.mapper.Photo">
+        SELECT * FROM t_photos a
+        <where>
+            <if test="id != null and id !=''">
+                AND a.id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <select id="findPageList" resultType="com.modules.sys.mapper.Photo">
+        SELECT <include refid="photoColumns"/> FROM t_photos a
+        <where>
+            <if test="userName!=null and userName!=''">
+              AND a.userName = #{userName}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO t_photos (
+        id,
+        create_time,
+        create_user,
+        userName,
+        type,
+        image_Name
+        )
+        VALUES
+        (
+        #{id},
+        #{createTime},
+        #{createUser},
+        #{userName},
+        #{type},
+        #{imageName}
+        )
+    </insert>
+
+    <delete id="delete">
+        delete from t_photos where id = #{id};
+    </delete>
+
+    <update id="update">
+        UPDATE t_photos SET
+        create_time = #{createTime},
+        create_user = #{createUser},
+        userName = #{userName},
+        type = #{type},
+        image_Name = #{imageName}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.modules.sys.dao.LoginLogDao">
+    <sql id="loginLogColumns">
+        a.id AS "id",
+        a.create_time AS "createTime",
+        a.create_user AS "createUser",
+        a.userName AS "userName",
+        a.ip AS "ip",
+        a.browser_info AS "browserInfo",
+        a.login_time AS "loginTime"
+    </sql>
+
+    <select id="get" resultType="com.modules.sys.mapper.LoginLog">
+        SELECT * FROM t_login_log a
+        <where>
+            <if test="id != null and id !=''">
+                AND a.id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <select id="findPageList" resultType="com.modules.sys.mapper.LoginLog">
+        SELECT <include refid="loginLogColumns"/> FROM t_login_log a ORDER BY a.login_time DESC
+    </select>
+
+    <insert id="insert">
+        INSERT INTO t_login_log (
+        id,
+        create_time,
+        create_user,
+        userName,
+        ip,
+        browser_info,
+        login_time
+        )
+        VALUES
+        (
+        #{id},
+        #{createTime},
+        #{createUser},
+        #{userName},
+        #{ip},
+        #{browserInfo},
+        #{loginTime}
+        )
+    </insert>
+
+    <delete id="delete">
+        delete from t_login_log where id = #{id};
+    </delete>
+
+    <update id="update">
+        UPDATE t_login_log SET
+        create_time = #{createTime},
+        create_user = #{createUser},
+        userName = #{userName},
+        ip = #{ip},
+        browser_info = #{browserInfo},
+        login_time = #{loginTime}
+        WHERE id = #{id}
+    </update>
+
+    </mapper>

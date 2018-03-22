@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.modules.sys.dao.UserDao">
+
+    <!--
+    ehcache已经配置好了,然后只需要在想要缓存的mapper配置文件里面加入以下内容,该查询语句得到的结果将会被缓存
+    以下两个<cache>标签都可以,第一个可以输出日志,第二个不输出日志
+     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+     <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+    -->
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+
+    <sql id="userColumns">
+        a.id AS "id",
+        a.create_time AS "createTime",
+        a.create_user AS "createUser",
+        a.userName AS "userName",
+        a.password AS "password",
+        a.roleType AS "roleType",
+        a.email AS "email",
+        a.name AS "name"
+    </sql>
+
+    <select id="get" resultType="com.modules.sys.mapper.User">
+        SELECT * FROM t_user a
+        <where>
+            <if test="id != null and id !=''">
+                AND a.id = #{id}
+            </if>
+            <if test="userName != null and userName !=''">
+                AND a.userName = #{userName}
+            </if>
+        </where>
+    </select>
+
+    <select id="findPageList" resultType="com.modules.sys.mapper.User">
+        SELECT
+          <include refid="userColumns"/>,
+          b.roleName AS "roleTypeName"
+        FROM t_user a
+        LEFT JOIN t_role b ON a.roleType = b.type
+        <where>
+            <if test="id != null and id !=''">
+                AND a.id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert">
+      INSERT INTO t_user
+      (
+        id,
+        create_time,
+        create_user,
+        userName,
+        password,
+        roleType,
+        email,
+        name
+      )
+        VALUES
+      (
+		#{id},
+		#{createTime},
+		#{createUser},
+		#{userName},
+		#{password},
+		#{roleType},
+		#{email},
+		#{name}
+	  )
+    </insert>
+
+
+
+
+</mapper>

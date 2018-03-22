@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/testm1519441451697" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1519441451697" name="" targetNamespace="http://www.activiti.org/testm1519441451697" typeLanguage="http://www.w3.org/2001/XMLSchema">
+  <process id="LEAVE_ACTIVITI" isClosed="false" isExecutable="true" name="请假流程" processType="None">
+    <startEvent id="start" name="开始"/>
+    <endEvent id="end" name="结束"/>
+    <userTask activiti:exclusive="true" id="apply" name="发起申请"/>
+    <userTask activiti:assignee="admin" activiti:exclusive="true" id="adminAuditing" name="管理员审批"/>
+    <userTask activiti:assignee="${superadminUser}" activiti:async="false" activiti:exclusive="true" id="superadminAuditing" name="超级管理员审批"/>
+    <sequenceFlow id="_15" sourceRef="start" targetRef="apply"/>
+    <sequenceFlow id="_3" name="开始审批流程" sourceRef="apply" targetRef="adminAuditing"/>
+    <exclusiveGateway gatewayDirection="Unspecified" id="next_1" name="下一步"/>
+    <sequenceFlow id="_5" sourceRef="adminAuditing" targetRef="next_1"/>
+    <sequenceFlow id="_6" name="是" sourceRef="next_1" targetRef="superadminAuditing">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${flag=='yes'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_2" sourceRef="superadminAuditing" targetRef="end"/>
+    <sequenceFlow id="_4" name="否" sourceRef="next_1" targetRef="end">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${flag=='no'}]]></conditionExpression>
+    </sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram documentation="background=#3C3F41;count=1;horizontalcount=1;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0" id="Diagram-_1" name="New Diagram">
+    <bpmndi:BPMNPlane bpmnElement="LEAVE_ACTIVITI">
+      <bpmndi:BPMNShape bpmnElement="start" id="Shape-start">
+        <dc:Bounds height="32.0" width="32.0" x="40.0" y="190.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="end" id="Shape-end">
+        <dc:Bounds height="32.0" width="32.0" x="755.0" y="180.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="apply" id="Shape-apply">
+        <dc:Bounds height="55.0" width="85.0" x="180.0" y="180.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="adminAuditing" id="Shape-adminAuditing">
+        <dc:Bounds height="55.0" width="85.0" x="355.0" y="180.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="superadminAuditing" id="Shape-superadminAuditing">
+        <dc:Bounds height="55.0" width="85.0" x="595.0" y="170.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="next_1" id="Shape-next_1" isMarkerVisible="false">
+        <dc:Bounds height="32.0" width="32.0" x="520.0" y="310.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="_15" id="BPMNEdge__15" sourceElement="start" targetElement="apply">
+        <di:waypoint x="72.0" y="206.0"/>
+        <di:waypoint x="180.0" y="207.5"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_2" id="BPMNEdge__2" sourceElement="superadminAuditing" targetElement="end">
+        <di:waypoint x="680.0" y="197.5"/>
+        <di:waypoint x="755.0" y="196.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_3" id="BPMNEdge__3" sourceElement="apply" targetElement="adminAuditing">
+        <di:waypoint x="265.0" y="207.5"/>
+        <di:waypoint x="355.0" y="207.5"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_4" id="BPMNEdge__4" sourceElement="next_1" targetElement="end">
+        <di:waypoint x="552.0" y="326.0"/>
+        <di:waypoint x="770.0" y="305.0"/>
+        <di:waypoint x="770.0" y="211.9687194226713"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_5" id="BPMNEdge__5" sourceElement="adminAuditing" targetElement="next_1">
+        <di:waypoint x="440.0" y="207.5"/>
+        <di:waypoint x="520.0" y="326.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_6" id="BPMNEdge__6" sourceElement="next_1" targetElement="superadminAuditing">
+        <di:waypoint x="552.0" y="326.0"/>
+        <di:waypoint x="638.0" y="265.0"/>
+        <di:waypoint x="638.0" y="225.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="-41.0" width="0.0" x="0.0" y="38.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.modules.sys.dao.RoleDao">
+    <sql id="roleColumns">
+        a.id AS "id",
+        a.type AS "type",
+        a.roleName AS "roleName"
+    </sql>
+
+    <select id="get" resultType="com.modules.sys.mapper.Role">
+        SELECT * FROM t_role a
+        <where>
+            <if test="id != null and id !=''">
+                AND a.id = #{id}
+            </if>
+            <if test="type != null and type !=''">
+                AND a.type = #{type}
+            </if>
+        </where>
+    </select>
+
+    <select id="findPageList" resultType="com.modules.sys.mapper.Role">
+        SELECT
+        <include refid="roleColumns"/>
+        FROM t_role a
+        <where>
+            <if test="id != null and id !=''">
+                AND a.id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO t_role
+        (
+        id,
+        type,
+        roleName
+        )
+        VALUES
+        (
+        #{id},
+        #{type},
+        #{roleName}
+        )
+    </insert>
+
+    <delete id="delete">
+        delete from t_role where id = #{id};
+    </delete>
+</mapper>
