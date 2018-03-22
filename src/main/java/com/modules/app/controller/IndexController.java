@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(value = {"app"})
 public class IndexController {
-
+        //webapp
     @RequestMapping(value = "")
     public String app(Model uiModel){
 
