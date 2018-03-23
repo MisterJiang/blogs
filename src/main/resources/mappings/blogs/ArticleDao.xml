@@ -32,7 +32,7 @@
 
 
     <select id="findPageList" resultType="com.modules.blogs.mapper.Article">
-        SELECT <include refid="articleColumns"/> FROM t_article a
+        SELECT <include refid="articleColumns"/> FROM t_article a ORDER BY a.create_time DESC
     </select>
 
     <insert id="insert">
