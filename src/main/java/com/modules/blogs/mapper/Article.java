@@ -2,10 +2,9 @@ package com.modules.blogs.mapper;
 
 import com.utils.EntityBase;
 
-import java.beans.Introspector;
-
 /**
  * Created by Administrator on 2018/1/19.
+ * 文章
  */
 public class Article extends EntityBase{
 
