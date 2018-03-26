@@ -9,4 +9,6 @@ package com.modules.blogs.mapper;
  * Description:评论
  */
 public class Comment {
+
+  //  private String
 }
