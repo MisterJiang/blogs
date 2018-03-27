@@ -9,7 +9,10 @@
 		<script type="text/javascript">
 			$(document).ready(function() {
 				layui.use('code', function(){ //加载code模块
-					layui.code(); //引用code方法
+                    //引用code方法
+					layui.code({
+                        about: false
+					});
 				});
 
 				layui.use('flow', function(){

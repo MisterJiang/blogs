@@ -11,6 +11,8 @@
 <script src="${ctxStatic}/res/layui/layui.js" type="text/javascript"></script>
 <script src="${ctxStatic}/js/jquery/jquery-1.10.2.min.js" type="text/javascript"></script>
 <script src="${ctxStatic}/js/jquery/jquery.serialize-object.js" type="text/javascript"></script>
+<script src="${ctxStatic}/js/vue/vue.min.js" type="text/javascript"></script>
+
 <script>
     layui.config({
         version: "3.0.0"

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.modules.blogs.dao.ReplyDao">
+    <!--
+    ehcache已经配置好了,然后只需要在想要缓存的mapper配置文件里面加入以下内容,该查询语句得到的结果将会被缓存
+    以下两个<cache>标签都可以,第一个可以输出日志,第二个不输出日志
+     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+     <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+    -->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+
+    <sql id="replyColumns">
+        a.id AS "id",
+        a.comment_id AS "commentId",
+        a.from_user_id AS "fromUserId",
+        a.to_user_id AS "toUserId",
+        a.reply_msg AS "replyMsg",
+        a.create_time AS "createTime"
+    </sql>
+
+    <select id="get" resultType="com.modules.blogs.mapper.Reply">
+        SELECT * FROM t_reply a
+        <where>
+            <if test="id != null and id !=''">
+                AND a.id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <select id="findPageList" resultType="com.modules.blogs.mapper.Reply">
+        SELECT <include refid="replyColumns"/> FROM t_reply a ORDER BY a.create_time DESC
+    </select>
+
+    <insert id="insert">
+        INSERT INTO t_reply (
+        id,
+        comment_id,
+        from_user_id,
+        to_user_id,
+        reply_msg,
+        create_time
+        )
+        VALUES
+        (
+        #{id},
+        #{commentId},
+        #{fromUserId},
+        #{toUserId},
+        #{replyMsg},
+        #{createTime}
+        )
+    </insert>
+</mapper>

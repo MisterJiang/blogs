@@ -27,6 +27,7 @@
     <quartz.version>2.2.1</quartz.version>
     <ehcache.version>2.6.8</ehcache.version>
     <ehcache-web.version>2.0.4</ehcache-web.version>
+    <jetty.version>9.3.0.M1</jetty.version>
   </properties>
   <dependencies>
     <dependency>
@@ -514,5 +515,12 @@
   </dependencies>
   <build>
     <finalName>blogs</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>${jetty.version}</version>
+      </plugin>
+    </plugins>
   </build>
 </project>
