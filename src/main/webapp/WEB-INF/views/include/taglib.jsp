@@ -6,5 +6,9 @@
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <c:set var="ctxStatic" value="${pageContext.request.contextPath}/static"/>
+
+<c:set var="sessionInfo" value="${sessionScope.sessionInfo}"/>
+
+
 <!--前端后缀.html 伪静态-->
 <c:set var="urlSuffix" value=".html"/>

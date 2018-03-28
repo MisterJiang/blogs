@@ -33,7 +33,7 @@ public class ReplyServiceImpl implements ReplyService {
         if (page == null){
             page = 1;
         }
-        PageHelper.startPage(page, limit, true);
+        PageHelper.startPage(page, limit, false, null, true);
         List<Reply> pageList = replyDao.findPageList(entity);
         PageInfo pageInfo = new PageInfo(pageList);
         return pageInfo;

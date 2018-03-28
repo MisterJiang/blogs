@@ -18,97 +18,165 @@
                 dataType: 'json',
                 data: {"articleId":articleId},
                 cache: false,
+                beforeSend:function(jqXHR,settings){
+                    $("#jieda").html("<li class='fly-none'>数据加载中...</li>");
+                },
                 success: function (data) {
-                    console.log(data.obj.list);
-                    var app = new Vue({
-                        el:"#jieda",
-                        template:'#jieda_template',
-                        data: {result: data.obj.list}
-                    });
-
+                //    console.log(data.obj.list);
+                    if(data['obj']['list'].length > 0){
+                        new Vue({
+                            el:"#jieda",
+                            template:'#jieda_template',
+                            data: {result: data.obj.list},
+                            methods:{
+                                replyTo:function(item, type){
+                                    $("#reply").remove();
+                                    $("#" + item.id).append(
+                                        "<div id='reply'><br/><textarea id='reply_text' class='layui-textarea' placeholder='说一说' style='height: 100px;'></textarea>" +
+                                        "<br/><div class='layui-form-item' id='replySave'>" +
+                                        "<button class='layui-btn' onclick='replySave("+JSON.stringify(item)+","+ JSON.stringify(type) +");'>提交回复</button>"+
+                                        "</div>" +
+                                        "</div>"
+                                    );
+                                },
+                            }
+                        });
+                    }else {
+                        $("#jieda").html("<li class='fly-none'>抢沙发</li>");
+                    }
                 }
             });
+        }
+
+        function replySave(item,type) {
+            if (${sessionInfo != null}){
+                var replyMsg = $("#reply_text").val();
+                if (replyMsg == ''){
+                    layer.msg('评论不能为空！', function(){});
+                    return;
+                }
+
+                if(type == 'comment'){  //回复评论
+                    // console.log(item['id']);
+                    var commentId = item['id'];
+                    var toUserName = item['userName'];
+
+
+                }else if(type == 'reply'){ //回复评论人
+                    console.log(item['id']);
+                }
+            }else {
+                layer.msg('未登录', function(){});
+            }
+        }
+
+        function pinlun(id) {  //发表评论
+            $("#reply").remove();
+            if (${sessionInfo != null}){
+                var content = $("#L_content").val();
+                if(content!=''){
+                    pinlunSave(id, content);
+                }else {
+                    layer.msg('评论不能为空！', function(){});
+                }
+            }else {
+                layer.msg('未登录', function(){});
+            }
+        }
+
+        //保存
+        function pinlunSave(id, content) {
+            $.ajax({
+                url:'${ctx}/comment/save',
+                type: 'post',
+                dataType: 'json',
+                data: {"id":id, "content":content},
+                cache: false,
+                beforeSend:function(jqXHR,settings){
+                    layer.msg('加载中', {icon: 16, shade: 0.01});
+                },
+                success: function (data) {
+                    layer.closeAll();
+                    if (data.code == 1){
+                        $(".fly-none").hide();
+                        var comment = data['obj'];
+                        $("#L_content").val('');
+                        $("#jieda").append(
+                            "<li data-id="+ comment['id'] +" class='jieda-daan'>" +
+                            "<div class='detail-about detail-about-reply'>" +
+                            "<a class='fly-avatar' href='#'>" +
+                            "<img src='https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg' alt=''>" +
+                            "</a>" +
+                            "<div class='fly-detail-user'>" +
+                            "<a href='#' class='fly-link'>" +
+                            "<cite>"+comment['userName']+"</cite>"+
+                            " <i class='layui-badge fly-badge-vip'>楼主</i>" +
+                            "</a>" +
+                            "</div>" +
+                            "<div class='detail-hits'>" +
+                            "<span>"+new Date(comment['createTime']).toLocaleString()+"</span>" +
+                            "</div>" +
+                            "</div>" +
+                            "<div class='detail-body jieda-body photos'>" +
+                            "<p>"+comment['replyMsg']+"</p>" +
+                            "</div>" +
+                            "</li>");
+                     //   innit();
+                    }else {
+                        layer.msg(data.msg, function(){});
+                    }
+                }
+            })
         }
     </script>
     <script type="text/template" id="jieda_template">
             <ul class="jieda" id="jieda">
-                <li data-id="111" class="jieda-daan" v-for="item in result">
+                <li v-bind:id="comment.id" class="jieda-daan" v-for="comment in result">
                     <div class="detail-about detail-about-reply">
                         <a class="fly-avatar" href="#">
                             <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt="">
                         </a>
                         <div class="fly-detail-user">
                             <a href="#" class="fly-link">
-                                <cite>贤心</cite>
+                                <cite>{{comment.userName}}</cite>
                                 <i class="layui-badge fly-badge-vip">楼主</i>
                             </a>
                         </div>
                         <div class="detail-hits">
-                            <span>{{item.createTime}}</span>
+                            <span>{{new Date(comment.createTime).toLocaleString()}}</span>
                         </div>
                     </div>
                     <div class="detail-body jieda-body photos">
-                        <p>{{item.replyMsg}}</p>
+                        <p>{{comment.replyMsg}}</p>
                     </div>
                     <div class="jieda-reply">
-                            <span type="reply">
-                                <i class="iconfont icon-svgmoban53"></i>回复
-                            </span>
+                        <span type="reply" v-on:click="replyTo(comment,'comment')">
+                            <i class="iconfont icon-svgmoban53"></i>回复
+                        </span>
                     </div>
-                    <ul style="padding-left: 50px;">
-                        <li data-id="111" class="jieda-daan">
+                    <ul v-for="reply in comment.replyList" style="padding-left: 50px;">
+                        <li v-bind:id="reply.id" class="jieda-daan">
                             <div class="detail-about detail-about-reply">
                                 <a class="fly-avatar" href="#">
                                     <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt="">
                                 </a>
                                 <div class="fly-detail-user">
-                                    <a href="#" class="fly-link">
-                                        <cite>superadmin</cite>
-                                        <i class="layui-badge fly-badge-vip">楼主</i>
-                                    </a>
+                                    @<a href="#" class="fly-link"><cite>{{reply.fromUserName}}</cite></a>回复&nbsp;
+                                    @<a href="#" class="fly-link"><cite>{{reply.toUserName}}</cite></a>
                                 </div>
                                 <div class="detail-hits">
-                                    <span>2017-11-30</span>
+                                    <span>{{new Date(reply.createTime).toLocaleString()}}</span>
                                 </div>
                             </div>
                             <div class="detail-body jieda-body photos">
-                                <p>香菇那个蓝瘦，这是一条被采纳的回帖</p>
+                                <p>{{reply.replyMsg}}</p>
                             </div>
-                            <div class="jieda-reply">
-                                    <span type="reply">
-                                <i class="iconfont icon-svgmoban53"></i>回复
-                            </span>
-                            </div>
-                        </li>
-
-                        <li data-id="111" class="jieda-daan">
-                            <div class="detail-about detail-about-reply">
-                                <a class="fly-avatar" href="#">
-                                    <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt="">
-                                </a>
-                                <div class="fly-detail-user">
-                                    <a href="#" class="fly-link">
-                                        <cite>admin</cite>
-                                        <i class="layui-badge fly-badge-vip">楼主</i>
-                                    </a>
-                                </div>
-                                <div class="detail-hits">
-                                    <span>2017-11-30</span>
-                                </div>
-                            </div>
-                            <div class="detail-body jieda-body photos">
-                                <p>香菇那个蓝瘦，这是一条被采纳的回帖</p>
-                            </div>
-                            <div class="jieda-reply">
-                                    <span type="reply">
-                                        <i class="iconfont icon-svgmoban53"></i>回复
-                                    </span>
+                            <div class="jieda-reply" v-on:click="replyTo(reply,'reply')">
+                                <span type="reply"><i class="iconfont icon-svgmoban53"></i>回复</span>
                             </div>
                         </li>
                     </ul>
                 </li>
-                <!-- 无数据时 -->
-                <!-- <li class="fly-none">抢沙发</li> -->
             </ul>
     </script>
 </head>
@@ -155,19 +223,17 @@
                     <legend>评论</legend>
                 </fieldset>
                 <ul class="jieda" id="jieda"></ul>
+                <hr class="layui-bg-blue">
                 <div class="layui-form layui-form-pane">
-                    <form action="${ctx}" method="post">
-                        <div class="layui-form-item layui-form-text">
-                            <a name="comment"></a>
-                            <div class="layui-input-block">
-                                <textarea id="L_content" name="content" required lay-verify="required" placeholder="请输入内容"  class="layui-textarea fly-editor" style="height: 150px;"></textarea>
-                            </div>
+                    <div class="layui-form-item layui-form-text">
+                        <a name="comment"></a>
+                        <div class="layui-input-block">
+                            <textarea id="L_content" name="content" required lay-verify="required" placeholder="请输入内容"  class="layui-textarea <%--fly-editor--%>" style="height: 150px;"></textarea>
                         </div>
-                        <div class="layui-form-item">
-                            <input type="hidden" name="jid" value="123">
-                            <button class="layui-btn" lay-filter="*" lay-submit>提交回复</button>
-                        </div>
-                    </form>
+                    </div>
+                    <div class="layui-form-item" id="pinlun">
+                        <button class="layui-btn" onclick="pinlun('${article.id}')">提交回复</button>
+                    </div>
                 </div>
             </div>
         </div>

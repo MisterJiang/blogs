@@ -14,9 +14,9 @@ public class Reply extends EntityBase {
 
     private String commentId;
 
-    private String fromUserId;
+    private String fromUserName;
 
-    private String toUserId;
+    private String toUserName;
 
     private String replyMsg;
 
@@ -28,20 +28,20 @@ public class Reply extends EntityBase {
         this.commentId = commentId;
     }
 
-    public String getFromUserId() {
-        return fromUserId;
+    public String getFromUserName() {
+        return fromUserName;
     }
 
-    public void setFromUserId(String fromUserId) {
-        this.fromUserId = fromUserId;
+    public void setFromUserName(String fromUserName) {
+        this.fromUserName = fromUserName;
     }
 
-    public String getToUserId() {
-        return toUserId;
+    public String getToUserName() {
+        return toUserName;
     }
 
-    public void setToUserId(String toUserId) {
-        this.toUserId = toUserId;
+    public void setToUserName(String toUserName) {
+        this.toUserName = toUserName;
     }
 
     public String getReplyMsg() {

@@ -33,7 +33,7 @@ public class CommentServiceImpl implements CommentService {
         if (page == null){
             page = 1;
         }
-        PageHelper.startPage(page, limit, true);
+        PageHelper.startPage(page, limit, false, null, true);
         List<Comment> pageList = commentDao.findPageList(entity);
         PageInfo pageInfo = new PageInfo(pageList);
         return pageInfo;
@@ -43,6 +43,7 @@ public class CommentServiceImpl implements CommentService {
     public Integer insert(Comment entity) {
         entity.setId(UUID_Utils.getUUID());
         entity.setCreateUser((String) SecurityUtils.getSubject().getPrincipal());
+        entity.setUserName((String) SecurityUtils.getSubject().getPrincipal());
         entity.setCreateTime(DateUtils.parseDate(DateUtils.getDateTime()));
         return commentDao.insert(entity);
     }

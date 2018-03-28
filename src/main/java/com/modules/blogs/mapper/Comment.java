@@ -2,6 +2,8 @@ package com.modules.blogs.mapper;
 
 import com.utils.EntityBase;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: JIANGYINCAI
@@ -14,11 +16,13 @@ public class Comment extends EntityBase {
 
     private String articleId;
 
-    private String userId;
+    private String userName;
 
     private String replyMsg;
 
     private Integer zanCount;
+
+    private List<Reply> replyList;
 
     public String getArticleId() {
         return articleId;
@@ -28,12 +32,12 @@ public class Comment extends EntityBase {
         this.articleId = articleId;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getReplyMsg() {
@@ -50,5 +54,13 @@ public class Comment extends EntityBase {
 
     public void setZanCount(Integer zanCount) {
         this.zanCount = zanCount;
+    }
+
+    public List<Reply> getReplyList() {
+        return replyList;
+    }
+
+    public void setReplyList(List<Reply> replyList) {
+        this.replyList = replyList;
     }
 }

@@ -7,13 +7,13 @@
      <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
      <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
     -->
-    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+   <!-- <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>-->
 
     <sql id="replyColumns">
         a.id AS "id",
         a.comment_id AS "commentId",
-        a.from_user_id AS "fromUserId",
-        a.to_user_id AS "toUserId",
+        a.from_user_name AS "fromUserName",
+        a.to_user_name AS "toUserName",
         a.reply_msg AS "replyMsg",
         a.create_time AS "createTime"
     </sql>
@@ -28,15 +28,21 @@
     </select>
 
     <select id="findPageList" resultType="com.modules.blogs.mapper.Reply">
-        SELECT <include refid="replyColumns"/> FROM t_reply a ORDER BY a.create_time DESC
+        SELECT <include refid="replyColumns"/> FROM t_reply a
+        <where>
+            <if test="commentId!=null and commentId!=''">
+                AND comment_id = #{commentId}
+            </if>
+        </where>
+        ORDER BY a.create_time ASC
     </select>
 
     <insert id="insert">
         INSERT INTO t_reply (
         id,
         comment_id,
-        from_user_id,
-        to_user_id,
+        from_user_name,
+        to_user_name,
         reply_msg,
         create_time
         )
@@ -44,8 +50,8 @@
         (
         #{id},
         #{commentId},
-        #{fromUserId},
-        #{toUserId},
+        #{fromUserName},
+        #{toUserName},
         #{replyMsg},
         #{createTime}
         )

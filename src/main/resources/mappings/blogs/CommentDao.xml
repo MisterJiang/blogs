@@ -7,12 +7,12 @@
      <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
      <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
     -->
-    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+   <!-- <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>-->
 
     <sql id="commentColumns">
         a.id AS "id",
         a.article_id AS "articleId",
-        a.user_id AS "userId",
+        a.user_name AS "userName",
         a.reply_msg AS "replyMsg",
         a.create_time AS "createTime",
         a.zan_count AS "zanCount"
@@ -37,14 +37,15 @@
                 AND a.article_id = #{articleId}
             </if>
         </where>
+        ORDER BY a.create_time ASC
     </select>
-    ORDER BY a.create_time DESC
+
 
     <insert id="insert">
         INSERT INTO t_comment (
         id,
         article_id,
-        user_id,
+        user_name,
         reply_msg,
         create_time,
         zan_count
@@ -53,7 +54,7 @@
         (
         #{id},
         #{articleId},
-        #{userId},
+        #{userName},
         #{replyMsg},
         #{createTime},
         0

@@ -133,7 +133,7 @@
                     <c:forEach var="article" items="${pageList.list}">
                         <li>
                             <a href="${ctx}/article/detail/${article.id}${urlSuffix}" class="fly-avatar">
-                                <img lay-src="http://tinywan-oss.oss-cn-shanghai.aliyuncs.com//uploads/article/5a6c86dc18669.png" alt="贤心">
+                                <img lay-src="${ctxStatic}/img/none.png" alt="贤心">
                             </a>
                             <h2>
                                 <a class="layui-badge">动态</a>
