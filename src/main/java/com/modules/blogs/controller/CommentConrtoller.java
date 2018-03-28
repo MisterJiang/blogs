@@ -7,6 +7,7 @@ import com.modules.blogs.service.ArticleService;
 import com.modules.blogs.service.CommentService;
 import com.modules.blogs.service.ReplyService;
 import com.utils.Result;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -78,6 +79,20 @@ public class CommentConrtoller {
     }
 
 
-
+    //评论保存
+    @RequestMapping(value = "replySave")
+    @ResponseBody
+    public Result replySave(@RequestParam(value = "commentId", required = true) String commentId,
+                       @RequestParam(value = "toUserName", required = true) String toUserName,
+                            @RequestParam(value = "replyMsg", required = true) String replyMsg,
+                       HttpServletRequest request, HttpServletResponse response){
+        Reply reply = new Reply();
+        reply.setCommentId(commentId);
+        reply.setReplyMsg(replyMsg);
+        reply.setToUserName(toUserName);
+        reply.setFromUserName((String) SecurityUtils.getSubject().getPrincipal());
+        replyService.insert(reply);
+        return Result.successResult().setObj(reply);
+    }
 
 }

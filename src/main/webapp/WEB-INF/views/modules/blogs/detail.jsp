@@ -31,10 +31,10 @@
                             methods:{
                                 replyTo:function(item, type){
                                     $("#reply").remove();
-                                    $("#" + item.id).append(
+                                    $("." + item.id).append(
                                         "<div id='reply'><br/><textarea id='reply_text' class='layui-textarea' placeholder='说一说' style='height: 100px;'></textarea>" +
                                         "<br/><div class='layui-form-item' id='replySave'>" +
-                                        "<button class='layui-btn' onclick='replySave("+JSON.stringify(item)+","+ JSON.stringify(type) +");'>提交回复</button>"+
+                                        "<button class='layui-btn' onclick='reply("+JSON.stringify(item)+","+ JSON.stringify(type) +");'>提交回复</button>"+
                                         "</div>" +
                                         "</div>"
                                     );
@@ -48,27 +48,55 @@
             });
         }
 
-        function replySave(item,type) {
+        function reply(item,type) {
             if (${sessionInfo != null}){
                 var replyMsg = $("#reply_text").val();
                 if (replyMsg == ''){
                     layer.msg('评论不能为空！', function(){});
                     return;
                 }
-
+                console.log(JSON.stringify(item));
+                var commentId;
+                var toUserName;
+                var id;
                 if(type == 'comment'){  //回复评论
-                    // console.log(item['id']);
-                    var commentId = item['id'];
-                    var toUserName = item['userName'];
-
-
+                    commentId = item['id'];
+                    toUserName = item['userName'];
                 }else if(type == 'reply'){ //回复评论人
-                    console.log(item['id']);
+                    commentId = item['commentId'];
+                    toUserName = item['fromUserName'];
+                    id = item['id'];
+
                 }
+                replySave(commentId, toUserName, replyMsg, type, id);
             }else {
                 layer.msg('未登录', function(){});
             }
         }
+
+        function  replySave(commentId, toUserName, replyMsg, type, id) {
+            $.ajax({
+                url:'${ctx}/comment/replySave',
+                type: 'post',
+                dataType: 'json',
+                data: {"commentId":commentId, "toUserName":toUserName, "replyMsg":replyMsg},
+                cache: false,
+                beforeSend:function(jqXHR,settings){
+                   // layer.msg('加载中', {icon: 16, shade: 0.01});
+                },
+                success: function (data) {
+                    console.log(data['obj']);
+                    if(type == 'reply'){
+                        $("#" + id).append("<div>22222</div>")
+                    }else {
+                        $("#replyAppend").append("<div>11111111111111</div>");
+                    }
+
+                }
+
+            });
+        }
+
 
         function pinlun(id) {  //发表评论
             $("#reply").remove();
@@ -131,7 +159,7 @@
     </script>
     <script type="text/template" id="jieda_template">
             <ul class="jieda" id="jieda">
-                <li v-bind:id="comment.id" class="jieda-daan" v-for="comment in result">
+                <li v-bind:class="comment.id" class="jieda-daan" v-for="comment in result">
                     <div class="detail-about detail-about-reply">
                         <a class="fly-avatar" href="#">
                             <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt="">
@@ -154,28 +182,32 @@
                             <i class="iconfont icon-svgmoban53"></i>回复
                         </span>
                     </div>
-                    <ul v-for="reply in comment.replyList" style="padding-left: 50px;">
-                        <li v-bind:id="reply.id" class="jieda-daan">
-                            <div class="detail-about detail-about-reply">
-                                <a class="fly-avatar" href="#">
-                                    <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt="">
-                                </a>
-                                <div class="fly-detail-user">
-                                    @<a href="#" class="fly-link"><cite>{{reply.fromUserName}}</cite></a>回复&nbsp;
-                                    @<a href="#" class="fly-link"><cite>{{reply.toUserName}}</cite></a>
+
+                    <div id="replyAppend">
+                        <ul v-for="reply in comment.replyList" style="padding-left: 50px;">
+                            <li v-bind:id="reply.id" class="jieda-daan">
+                                <div class="detail-about detail-about-reply">
+                                    <a class="fly-avatar" href="#">
+                                        <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt="">
+                                    </a>
+                                    <div class="fly-detail-user">
+                                        @<a href="#" class="fly-link"><cite>{{reply.fromUserName}}</cite></a>回复&nbsp;
+                                        @<a href="#" class="fly-link"><cite>{{reply.toUserName}}</cite></a>
+                                    </div>
+                                    <div class="detail-hits">
+                                        <span>{{new Date(reply.createTime).toLocaleString()}}</span>
+                                    </div>
                                 </div>
-                                <div class="detail-hits">
-                                    <span>{{new Date(reply.createTime).toLocaleString()}}</span>
+                                <div class="detail-body jieda-body photos">
+                                    <p>{{reply.replyMsg}}</p>
                                 </div>
-                            </div>
-                            <div class="detail-body jieda-body photos">
-                                <p>{{reply.replyMsg}}</p>
-                            </div>
-                            <div class="jieda-reply" v-on:click="replyTo(reply,'reply')">
-                                <span type="reply"><i class="iconfont icon-svgmoban53"></i>回复</span>
-                            </div>
-                        </li>
-                    </ul>
+                                <div class="jieda-reply" v-on:click="replyTo(reply,'reply')">
+                                    <span type="reply"><i class="iconfont icon-svgmoban53"></i>回复</span>
+                                </div>
+                            </li>
+                            <div v-bind:class="reply.id"></div>
+                        </ul>
+                    </div>
                 </li>
             </ul>
     </script>
