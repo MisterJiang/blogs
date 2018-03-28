@@ -38,6 +38,10 @@
                                         "</div>" +
                                         "</div>"
                                     );
+                                    $("html, body").animate(
+                                        {scrollTop: $("#reply_text").offset().top},
+                                        {duration: 500, easing: "swing"});
+                                    return false;
                                 },
                             }
                         });
@@ -49,6 +53,7 @@
         }
 
         function reply(item,type) {
+
             if (${sessionInfo != null}){
                 var replyMsg = $("#reply_text").val();
                 if (replyMsg == ''){
@@ -85,11 +90,28 @@
                    // layer.msg('加载中', {icon: 16, shade: 0.01});
                 },
                 success: function (data) {
-                    console.log(data['obj']);
+                    //console.log(data['obj']);
+                    var html = "" +
+                        "" +
+                        "" +
+                        "" +
+                        "" +
+                        "" +
+                        "" +
+                        "" +
+                        "" +
+                        "" +
+                        "" +
+                        "";
+
+                    //console.log(data['obj']);replyAppend
                     if(type == 'reply'){
-                        $("#" + id).append("<div>22222</div>")
+                        $("#reply_text").before("<li class='jieda-daan'>11111111111111</li>" +
+                            "</ul>");
                     }else {
-                        $("#replyAppend").append("<div>11111111111111</div>");
+                        $("#replyAppend").append("<ul style='padding-left: 50px;'>" +
+                            "<li class='jieda-daan'>11111111111111</li>" +
+                            "</ul>");
                     }
 
                 }
@@ -130,7 +152,7 @@
                         var comment = data['obj'];
                         $("#L_content").val('');
                         $("#jieda").append(
-                            "<li data-id="+ comment['id'] +" class='jieda-daan'>" +
+                            "<li id="+ comment['id'] +" class='jieda-daan'>" +
                             "<div class='detail-about detail-about-reply'>" +
                             "<a class='fly-avatar' href='#'>" +
                             "<img src='https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg' alt=''>" +
@@ -159,7 +181,7 @@
     </script>
     <script type="text/template" id="jieda_template">
             <ul class="jieda" id="jieda">
-                <li v-bind:class="comment.id" class="jieda-daan" v-for="comment in result">
+                <li v-bind:id="comment.id" class="jieda-daan" v-for="comment in result">
                     <div class="detail-about detail-about-reply">
                         <a class="fly-avatar" href="#">
                             <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" alt="">
@@ -208,6 +230,7 @@
                             <div v-bind:class="reply.id"></div>
                         </ul>
                     </div>
+                    <div v-bind:class="comment.id"></div>
                 </li>
             </ul>
     </script>
