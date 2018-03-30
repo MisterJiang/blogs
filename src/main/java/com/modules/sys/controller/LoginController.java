@@ -5,6 +5,7 @@ import com.modules.sys.mapper.User;
 import com.modules.sys.service.LoginLogService;
 import com.modules.sys.service.UserService;
 import com.utils.DateUtils;
+import com.utils.EmailUtils;
 import com.utils.Result;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.BrowserType;
@@ -128,6 +129,11 @@ public class LoginController {
             if (u != null){  //说明用户名已存在
                 return Result.warnResult().setMsg("用户名已存在!");
             }else {
+                try {
+                    EmailUtils.EmailSend(email, userName);
+                }catch (Exception e){
+                    return Result.errorResult().setMsg("注册失败, 发送激活码失败!");
+                }
                 user.setEmail(email);
                 user.setPassword(password);
                 user.setName(name);

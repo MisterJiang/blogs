@@ -28,6 +28,12 @@
               contentType: "application/x-www-form-urlencoded; charset=utf-8",
               data: {"userName":userName, "email":email, "password":password, "name":name},
               cache: false,
+              beforeSend:function(jqXHR,settings){
+                  layer.msg('正在注册中...', {
+                      icon: 16
+                      ,shade: 0.01
+                  });
+              },
               success: function (data) {
                 layer.closeAll();
                 if(data.code == 0){
