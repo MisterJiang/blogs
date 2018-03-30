@@ -9,6 +9,7 @@ import com.modules.sys.service.TimeLineService;
 import com.modules.sys.service.UserService;
 import com.utils.FileUploadUtil;
 import com.utils.JsonMapper;
+import com.utils.JudgeIsMoblie;
 import com.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,11 +42,16 @@ public class ArticleController {
     //首页
     @RequestMapping(value = "")
     public String blogs(Model uiModel, Integer page, Integer pageSize, HttpServletRequest request, HttpServletResponse response){
+        boolean judgeIsMoblie  = JudgeIsMoblie.JudgeIsMoblie(request);
         Article article = new Article();
         PageInfo<Article> pageList = articleService.findPageList(article, 1, 10);
         uiModel.addAttribute("pageList", pageList);
         uiModel.addAttribute("navigation", "index");
-        return "modules/blogs/index";
+        if(judgeIsMoblie == true){
+            return "modules/web/index";
+        }else {
+            return "modules/blogs/index";
+        }
     }
 
     //文章列表

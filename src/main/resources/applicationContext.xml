@@ -165,7 +165,7 @@
     <!--<mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <bean class="com.core.interceptor.LoginInterceptor"/>
+            <bean class="com.core.interceptor.IntercepterMobile"/>
         </mvc:interceptor>
     </mvc:interceptors>-->
 

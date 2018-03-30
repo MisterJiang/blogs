@@ -71,8 +71,11 @@
         <div class="copyright clear">
             基于 layui 的极简社区页面模版基于 layui 的极简社区页面模版基于 layui 的极简社区页面模版基于 layui 的极简社区页面模版
         </div>--%>
-        <input type="button" value="按钮"/>
 
+           <c:forEach var="article" items="${pageList.list}">
+               <div>${article.title}</div>
+               <div>${article.textView}</div>
+           </c:forEach>
 
     </div>
 
