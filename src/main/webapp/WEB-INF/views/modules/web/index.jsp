@@ -1,88 +1,99 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <!--禁止浏览器缩放-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type" />
-    <!--清除浏览器缓存-->
-    <meta http-equiv="pragma" content="no-cache">
-    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
-    <meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT">
-    <!--iPhone 手机上设置手机号码不被显示为拨号链接）-->
-    <meta content="telephone=no, address=no" name="format-detection" />
-    <!--IOS私有属性，可以添加到主屏幕-->
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <!--屏幕顶部条的颜色-->
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
-    <title>手机webApp</title>
-    <!-- 重置样式 -->
-    <link type="text/css" href="${ctxStatic}/app/css/reset.css" rel="stylesheet" />
-    <!-- 主样式 -->
-    <link type="text/css" href="${ctxStatic}/app/css/common.css" rel="stylesheet" />
-    <!-- Jquery库 -->
-    <script type="text/javascript" src="${ctxStatic}/app/js/jquery-2.1.4.min.js"></script>
-    <!-- 手机触摸 -->
-    <script type="text/javascript" src="${ctxStatic}/app/js/hammer.min.js"></script>
-    <script type="text/javascript" src="${ctxStatic}/app/js/common.js"></script>
-    <!--让IE8，IE9，支持Html5和Css3-->
-    <!--[if lte IE 8]>
-    <script src="${ctxStatic}/app/js/selectivizr.js"></script>
-    <script src="${ctxStatic}/app/js/selectivizr-development.js"></script>
-
-    <![endif]-->
-    <!--[if lt IE 9]>
-    <script src="${ctxStatic}/app/js/css3-mediaqueries.js"></script>
-    <script src="${ctxStatic}/app/js/html5shiv.js"></script>
-    <![endif]-->
-
-
-
-
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>首页</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
 </head>
 <body>
-<!--页面容器-->
-<div class="page-container min-height">
-    <!--头部-->
-    <div id="head">
-        基于 layui 的极简社区页面模版
-    </div>
 
-    <!--幻灯片-->
-    <div id="banner" class="position-relative">
-        <%--<ul>
-            <li><a href="#" title=""><img src="http://tinywan-oss.oss-cn-shanghai.aliyuncs.com//uploads/article/5a6c86dc18669.png" alt="" title="" /></a></li>
-            <li><a href="#" title=""><img src="http://tinywan-oss.oss-cn-shanghai.aliyuncs.com//uploads/article/5a6c86dc18669.png" alt="" title="" /></a></li>
-            <li><a href="#" title=""><img src="http://tinywan-oss.oss-cn-shanghai.aliyuncs.com//uploads/article/5a6c86dc18669.png" alt="" title="" /></a></li>
-        </ul>--%>
-    </div>
-
-    <!--主体-->
-    <div id="main">
-       <%-- <!--方块菜单-->
-        <div class="menu min-height">
-            基于 layui 的极简社区页面模版基于 layui 的极简社区页面模版基于 layui 的极简社区页面模版基于 layui 的极简社区页面模版基于 layui 的极简社区页面模版基于 layui 的极简社区页面模版
+<div class="page-group">
+    <!-- 你的html代码 -->
+    <div class="page">
+        <header class="bar bar-nav">
+            <a class="button button-link button-nav pull-left" href="/demos/card">
+                <span class="icon icon-left"></span>
+                返回
+            </a>
+            <h1 class="title">我的生活</h1>
+        </header>
+        <nav class="bar bar-tab">
+            <a class="tab-item external active" href="#">
+                <span class="icon icon-home"></span>
+                <span class="tab-label">首页</span>
+            </a>
+            <a class="tab-item external" href="#">
+                <span class="icon icon-me"></span>
+                <span class="tab-label">我</span>
+            </a>
+            <a class="tab-item external" href="#">
+                <span class="icon icon-star"></span>
+                <span class="tab-label">收藏</span>
+            </a>
+            <a class="tab-item external" href="#">
+                <span class="icon icon-settings"></span>
+                <span class="tab-label">设置</span>
+            </a>
+        </nav>
+        <div class="content">
+            <!-- 这里是页面内容区 -->
+            <div class="page-index">
+                <div class="card">
+                    <div style="background-image:url(//gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg)" valign="bottom" class="card-header color-white no-border">旅途的山</div>
+                    <div class="card-content">
+                        <div class="card-content-inner">
+                            <p class="color-gray">发表于 2015/01/15</p>
+                            <p>此处是内容...</p>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="link">赞</a>
+                        <a href="#" class="link">更多</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div style="background-image:url(//gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg)" valign="bottom" class="card-header color-white no-border">旅途的山</div>
+                    <div class="card-content">
+                        <div class="card-content-inner">
+                            <p class="color-gray">发表于 2015/01/15</p>
+                            <p>此处是内容...</p>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="link">赞</a>
+                        <a href="#" class="link">更多</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div style="background-image:url(//gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg)" valign="bottom" class="card-header color-white no-border">旅途的山</div>
+                    <div class="card-content">
+                        <div class="card-content-inner">
+                            <p class="color-gray">发表于 2015/01/15</p>
+                            <p>此处是内容...</p>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="link">赞</a>
+                        <a href="#" class="link">更多</a>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <!--描述-->
-        <div class="copyright clear">
-            基于 layui 的极简社区页面模版基于 layui 的极简社区页面模版基于 layui 的极简社区页面模版基于 layui 的极简社区页面模版
-        </div>--%>
-
-           <c:forEach var="article" items="${pageList.list}">
-               <div>${article.title}</div>
-               <div>${article.textView}</div>
-           </c:forEach>
-
-    </div>
-
-    <!--页脚-->
-    <div id="footer" class="position-fixed">
-        基于 layui 的极简社区页面模版基于 layui <br/>的极简社区页面模版基于 layui 的极简社区页面模版基于 layui 的极简社区页面模版
     </div>
 </div>
+<script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+<script>
+    $.init();
+</script>
 </body>
 </html>
+
