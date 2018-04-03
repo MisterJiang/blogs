@@ -13,6 +13,13 @@
 <script src="${ctxStatic}/js/jquery/jquery.serialize-object.js" type="text/javascript"></script>
 <script src="${ctxStatic}/js/vue/vue.min.js" type="text/javascript"></script>
 
+<!--代码高亮-->
+<%--<link rel="stylesheet" href="${ctxStatic}/js/highlight/styles/default.css">
+<link rel="stylesheet" href="${ctxStatic}/js/highlight/styles/solarized-light.css">
+--%>
+<link rel="stylesheet" href="${ctxStatic}/js/highlight/styles/vs.css">
+<script src="${ctxStatic}/js/highlight/highlight.pack.js" type="text/javascript"></script>
+
 <script>
     layui.config({
         version: "3.0.0"

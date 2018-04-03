@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>11</title>
+    <meta charset="utf-8">
+ 
+    <!--
+        <link rel="stylesheet" href="/path/to/styles/qtcreator_light.css">
+        <script src="highlight.pack.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+
+    -->
+     
+    <link rel="stylesheet" type="text/css" href="styles/railscasts.css">
+    <script src="highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+    
+</head>
+<body>
+<h1>Highlight.js</h1>
+<div style="width: 500px">
+<pre>
+    <code class="javascript">
+        function selectionSort(arr){
+            var minIndex, temp, len = arr.length;
+            for(var i=0; i < len; i++){
+                minIndex = i;
+                for(var j=i+1; j < len; j++){
+                    if(arr[j] < arr[minIndex]){
+                        minIndex = j;
+                    }
+                }
+                temp = arr[i];
+                arr[i] = arr[minIndex];
+                arr[minIndex] = temp;
+            }
+            return arr;
+        }
+        var num = new Array;
+        num = [1,5,2,8,4,9,3,0,4];
+        console.log(selectionSort(num));
+
+    </code>
+</pre>
+ </div>
+</body>
+</html>

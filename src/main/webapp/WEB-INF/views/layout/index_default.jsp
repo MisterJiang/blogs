@@ -8,13 +8,15 @@
 		<sitemesh:head/>
 		<script type="text/javascript">
 			$(document).ready(function() {
-				layui.use('code', function(){ //加载code模块
+				/*layui.use('code', function(){ //加载code模块
                     //引用code方法
 					layui.code({
-                        about: false
+                        about: false,
+                        height: '400px'
 					});
-				});
+				});*/
 
+                $('pre').each(function(i, e) {hljs.highlightBlock(e)});  //代码高亮
 				layui.use('flow', function(){
 					var flow = layui.flow;
 					//当你执行这样一个方法时，即对页面中的全部带有lay-src的img元素开启了懒加载（当然你也可以指定相关img）

@@ -7,6 +7,7 @@
     <script type="text/javascript">
         var articleId = '${article.id}';
         $(function () {
+          //  $('pre').each(function(i, e) {hljs.highlightBlock(e)});  //代码高亮
             innit();
         });
 

@@ -24,7 +24,6 @@ public class IndexController {
     public String app(Model uiModel){
         Article article = new Article();
         PageInfo<Article> pageList = articleService.findPageList(article, 1, 10);
-        uiModel.addAttribute("pageList", pageList);
         uiModel.addAttribute("navigation", "index");
         uiModel.addAttribute("pageList", pageList);
         return "modules/web/index";
