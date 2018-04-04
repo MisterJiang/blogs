@@ -86,7 +86,7 @@ public class ArticleController {
     /*@RequiresAuthentication*/ //用户已登录
     @RequestMapping(value = "article/publish")
     public String publish(Model uiModel){
-        return "modules/blogs/publish";
+        return "modules/blogs/publish_c";
     }
 
     //文章保存
