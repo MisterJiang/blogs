@@ -68,7 +68,8 @@ public class FileUploadUtil {
                         // 重命名上传后的文件名 111112323.jpg
                         fileName = Calendar.getInstance().getTimeInMillis() + suffix;
                         // 定义上传路径 .../uploadImage/111112323.jpg
-                        File uploadFile = new File(realPathDirectory + "\\" + fileName);
+                        String property = System.getProperty("file.separator");
+                        File uploadFile = new File(realPathDirectory + property + fileName);
                         System.out.println(uploadFile);
                         file.transferTo(uploadFile);
                     }
