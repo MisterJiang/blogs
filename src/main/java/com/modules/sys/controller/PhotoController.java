@@ -36,7 +36,7 @@ import java.util.Map;
 public class PhotoController {
     @Autowired
     private PhotoService photoService;
-
+    private static String property = System.getProperty("file.separator");
     @RequestMapping(value = "")
     public String user(HttpServletRequest request, HttpServletResponse response){
         User user = (User) SecurityUtils.getSubject().getSession().getAttribute("sessionInfo");
@@ -47,16 +47,16 @@ public class PhotoController {
     @ResponseBody
     public String upload(HttpServletRequest request, HttpServletResponse response){
         User user = (User) SecurityUtils.getSubject().getSession().getAttribute("sessionInfo");
-        String DirectoryName = "photofiles"  + "\\" + user.getUserName();
+        String DirectoryName = "photofiles"  + property + user.getUserName();
         HashMap<String, Object> hashMap = Maps.newHashMap();
         HashMap<Object, Object> dataMap = Maps.newHashMap();
         String yearMonth = DateUtils.formatDate(new Date(), "yyyyMM");
         try{
             String imagePath = FileUploadUtil.uploadImage(request, response, DirectoryName);
             hashMap.put("code", 0);
-            /*dataMap.put("src", request.getContextPath() + "\\" + imagePath);
+            /*dataMap.put("src", request.getContextPath() + property + imagePath);
             hashMap.put("data", dataMap);*/
-            String imageName = yearMonth + "\\" + imagePath.substring(imagePath.lastIndexOf("\\")+1, imagePath.length());
+            String imageName = yearMonth + property + imagePath.substring(imagePath.lastIndexOf(property)+1, imagePath.length());
             //图片插入数据库中
             Photo photo = new Photo();
             photo.setUserName(user.getUserName());

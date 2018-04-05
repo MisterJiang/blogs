@@ -37,7 +37,7 @@ public class ArticleController {
     private UserService userService;
     @Autowired
     private TimeLineService timeLineService;
-
+    private static String property = System.getProperty("file.separator");
     //首页
     @RequestMapping(value = "")
     public String blogs(Model uiModel, Integer page, Integer pageSize, HttpServletRequest request, HttpServletResponse response){
@@ -121,7 +121,7 @@ public class ArticleController {
              }
              */
             hashMap.put("code", 0);
-            dataMap.put("src", request.getContextPath() + "\\" + imagePath);
+            dataMap.put("src", request.getContextPath() + property + imagePath);
             hashMap.put("data", dataMap);
             String toJson = JsonMapper.getInstance().toJson(hashMap);
             return toJson;

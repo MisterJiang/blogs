@@ -17,7 +17,7 @@ import java.util.*;
 public class FileUploadUtil {
     // 图片类型
     private static List<String> fileTypes = new ArrayList<String>();
-
+    private static String property = System.getProperty("file.separator");
     static {
         fileTypes.add(".jpg");
         fileTypes.add(".jpeg");
@@ -68,7 +68,7 @@ public class FileUploadUtil {
                         // 重命名上传后的文件名 111112323.jpg
                         fileName = Calendar.getInstance().getTimeInMillis() + suffix;
                         // 定义上传路径 .../uploadImage/111112323.jpg
-                        String property = System.getProperty("file.separator");
+
                         File uploadFile = new File(realPathDirectory + property + fileName);
                         System.out.println(uploadFile);
                         file.transferTo(uploadFile);
@@ -79,6 +79,6 @@ public class FileUploadUtil {
                 // System.out.println(finaltime - pre);
             }
         }
-        return DirectoryName + "\\" + yearMonth + "\\" +fileName;
+        return DirectoryName + property + yearMonth + property +fileName;
     }
 }
