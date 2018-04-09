@@ -68,9 +68,12 @@
   <ul class="gallery">
     <c:forEach items="${pageList.list}" var="result">
       <li>
-        <a href="/photofiles/${result.userName}/${result.imageName}">
+        <%--<a href="/photofiles/${result.userName}/${result.imageName}">
           <img width="100px" height="100px" lay-src="/photofiles/${result.userName}/${result.imageName}" />
-        </a>
+        </a>--%>
+          <a href="${qiNiuPhotosUrl}/${result.keyHash}">
+            <img width="100px" height="100px" lay-src="${qiNiuPhotosUrl}/${result.keyHash}" />
+          </a>
       </li>
     </c:forEach>
   </ul>

@@ -10,6 +10,7 @@ public class Photo extends EntityBase {
     private String type;
     private String userName;
     private String imageName;
+    private String keyHash;
 
     public String getType() {
         return type;
@@ -33,5 +34,13 @@ public class Photo extends EntityBase {
 
     public void setImageName(String imageName) {
         this.imageName = imageName;
+    }
+
+    public String getKeyHash() {
+        return keyHash;
+    }
+
+    public void setKeyHash(String keyHash) {
+        this.keyHash = keyHash;
     }
 }

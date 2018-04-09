@@ -1,114 +1,144 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
-    <head>
-        <title>文章发布</title>
-        <meta name="decorator" content="default"/>
-    <!-- Bootstrap -->
-   <link rel="stylesheet" href="${ctxStatic}/js/CFEditor/bootstrap/css/bootstrap-2014-10-23-e2373d4a.min.css">
-    <link href="${ctxStatic}/js/CFEditor/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <!-- bootstrap -->
-    <script src="${ctxStatic}/js/CFEditor/bootstrap/js/bootstrap-2014-10-23-140084e9.min.js"></script>
+<head>
+    <title>文章发布</title>
+    <meta name="decorator" content="default"/>
+    <script>
+        $(document).ready(function() {
+            var layedit;
+            var index;
+            layui.use('layedit', function(){
+                layedit = layui.layedit
+                    ,$ = layui.jquery;
+                layedit.set({
+                    uploadImage: {
+                        url: '${ctx}/article/uploadImage' //接口url
+                        ,type: 'post' //默认post
+                    }
+                });
+                index = layedit.build('L_content', {//建立编辑器
+                    tool: ['strong', 'italic', 'underline', 'del', 'unlink', 'link', 'left', 'center', 'right', '|', 'face', 'image', 'code']
+                });
 
-    <script src="${ctxStatic}/js/CFEditor/js/global.js"></script>
+                //编辑器外部操作
+                var active = {
+                    content: function(){
+                        var title = $("#L_title").val();  //标题
+                        var content = layedit.getContent(index);
+                        var str = "<pre class=" + "layui-code" +" lay-lang";
+                        content = content.replace(/<pre lay-lang/g, str);
+                        var strTitle = 'alt=' + '"' + title +'"';
+                        //  console.log(strTitle);
+                        content = content.replace(/alt="undefined"/g, strTitle);
+                        //  console.log(content);
+                        var textView = layedit.getText(index);
+                        layer.open({
+                            type: 1
+                            ,title: '预览'
+                            ,shade: false
+                            ,area: ['100%', '100%']
+                            ,scrollbar: false
+                            ,content: '<div class="detail-body" style="margin:20px;">'+  content +'</div>'
+                        });
+                    }
+                    ,text: function(){
+                        alert(layedit.getText(index)); //获取编辑器纯文本内容
+                    }
+                    ,selection: function(){
+                        alert(layedit.getSelection(index));
+                    }
+                };
 
-    <script src="${ctxStatic}/js/CFEditor/wysihtml5/main.js"></script>
-    <script src="${ctxStatic}/js/CFEditor/wysihtml5/classfoo-editor.js"></script>
+                $('.site-demo-layedit').on('click', function(){
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+            });
 
-        <style>
-            .transit {
-                -webkit-transition: all 0.4s ease-in-out;
-                -o-transition: all 0.4s ease-in-out;
-                transition: all 0.4s ease-in-out
-            }
-
-            .cfeditor {
-                padding: 10px;
-                overflow: auto;
-                width: 100%;
-                height: 350px;
-                border: 1px solid #cccccc;
-                border-radius: 4px;
-                outline: 0
-            }
-
-            div.cf-toolbar a.wysihtml5-command-active {
-                background-image: none;
-                -webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
-                -moz-box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
-                box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
-                background-color: #E6E6E6;
-                background-color: #D9D9D9;
-                outline: 0
-            }
-
-            .change-label .label {
-                font-size: 100%
-            }
-
-            .cf-toolbar .tb-bg ul li a,.cf-toolbar .tb-alert ul li a {
-                padding: 0px 0px
-            }
-
-            .cf-toolbar .tb-bg ul {
-                padding: 0px
-            }
-
-            .cf-toolbar .tb-bg ul li span {
-                display: block;
-                padding: 8px 10px;
-                width: 100%
-            }
-
-            .cf-toolbar .tb-alert ul li p {
-                margin: 6px
-            }
-
-            .cf-toolbar .showit {
-                width: 66px
-            }
-
-            .cf-toolbar .result-wrap.showit {
-                width: 39px
-            }
-
-            .cf-toolbar .hideit {
-                width: 0px
-            }
-
-            .cf-toolbar .extra-part {
-                overflow-x: hidden;
-                display: block
-            }
-
-            .cf-toolbar .toggle-extra-part {
-                padding: 6px;
-                background-color: transparent
-            }
-
-            .cf-toolbar .extra-part.open {
-                overflow-x: visible
-            }
-            .bg-primary,.bg-success,.bg-info,.bg-warning,.bg-danger {
-                padding: 8px 10px
-            }
-        </style>
-    </head>
-
-    <body>
-    <div class="fly-panel"></div>
-    <div class="layui-container fly-panel fly-marginTop">
-
-        <div class="fly-panel" pad20 style="padding-top: 5px;">
-
-
-
-
+            layui.use(['form'], function () {
+                var form = layui.form
+                    , layer = layui.layer;
+                //监听提交
+                form.on('submit(articleSave)', function (data) {
+                    var content = layedit.getContent(index);
+                    var title = data.field.title;  //标题
+                    var str = "<pre class=" + "layui-code" +" lay-lang";
+                    content = content.replace(/<pre lay-lang/g, str);
+                    var strTitle = 'alt=' + '"' + title +'"';
+                    //    console.log(strTitle);
+                    content = content.replace(/alt="undefined"/g, strTitle);
+                    //   console.log(content);
+                    var textView  = layedit.getText(index); //纯文本
+                    textView = textView.substring(0, 250);
+                    if(content == ''){
+                        layer.msg("内容不能为空！");
+                    }else{
+                        $.ajax({
+                            url: '${ctx}/article/publish/save',
+                            type: 'post',
+                            dataType: 'json',
+                            data: {"content":content, "title":title, "textView":textView},
+                            cache: false,
+                            success: function (data) {
+                                console.log(data.obj);
+                                //layer.closeAll();
+                                if(data.code == 0){
+                                    layer.msg(data.msg);
+                                }else if(data.code == 2){
+                                    layer.msg(data.msg);
+                                }else{
+                                    layer.msg("发布成功！");
+                                    setTimeout(function(){
+                                        window.location.href= '${ctx}/article/detail/'+ data.obj + '${urlSuffix}';
+                                    }, 1000);
+                                }
+                            }
+                        });
+                    }
+                    return false;
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="fly-panel"></div>
+<div class="layui-container fly-panel fly-marginTop">
+    <div class="fly-panel" pad20 style="padding-top: 5px;">
+        <%-- <div class="fly-none">没有权限</div>--%>
+        <div class="layui-form layui-form-pane">
+            <div class="layui-tab layui-tab-brief" lay-filter="user">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">发表新帖<!-- 编辑帖子 --></li>
+                </ul>
+                <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
+                    <div class="layui-tab-item layui-show">
+                        <form id="searchForm" onsubmit="return false;">
+                            <div class="layui-row layui-col-space15 layui-form-item">
+                                <div class="layui-col-md9">
+                                    <label for="L_title" class="layui-form-label">标题</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" id="L_title" name="title" lay-verify="required" placeholder="标题" autocomplete="off" class="layui-input">
+                                        <!-- <input type="hidden" name="id" value="{{d.edit.id}}"> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-form-text">
+                                <div class="layui-input-block">
+                                    <textarea id="L_content" name="content"></textarea>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <span class="layui-btn site-demo-layedit" data-type="content">预览</span>
+                                <button class="layui-btn" lay-filter="articleSave" lay-submit="">立即发布</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-
-
-
-
     </div>
+</div>
 </body>
 </html>

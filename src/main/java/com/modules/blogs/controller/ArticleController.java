@@ -7,10 +7,8 @@ import com.modules.blogs.service.ArticleService;
 import com.modules.sys.mapper.TimeLine;
 import com.modules.sys.service.TimeLineService;
 import com.modules.sys.service.UserService;
-import com.utils.FileUploadUtil;
-import com.utils.JsonMapper;
-import com.utils.JudgeIsMoblie;
-import com.utils.Result;
+import com.qiniu.storage.model.DefaultPutRet;
+import com.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -108,7 +106,8 @@ public class ArticleController {
         HashMap<String, Object> hashMap = Maps.newHashMap();
         HashMap<Object, Object> dataMap = Maps.newHashMap();
         try{
-            String imagePath = FileUploadUtil.uploadImage(request, response, DirectoryName);
+            DefaultPutRet defaultPutRet = QiNiuUploadUtil.QinNiu2(request, "article");
+            //  String imagePath = FileUploadUtil.uploadImage(request, response, DirectoryName);
             /**
              *
              {
@@ -121,11 +120,12 @@ public class ArticleController {
              }
              */
             hashMap.put("code", 0);
-            dataMap.put("src", request.getContextPath() + property + imagePath);
+            //  http://otffjxbtr.bkt.clouddn.com/+图片名称
+            dataMap.put("src", "http://otffjxbtr.bkt.clouddn.com/" + defaultPutRet.hash);
             hashMap.put("data", dataMap);
             String toJson = JsonMapper.getInstance().toJson(hashMap);
             return toJson;
-        }catch (IOException e){
+        }catch (Exception e){
             hashMap.put("code", 0);
             hashMap.put("msg", "图片上传出错, 请联系管理员！");
             String toJson = JsonMapper.getInstance().toJson(hashMap);

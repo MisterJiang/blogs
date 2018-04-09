@@ -20,6 +20,10 @@
 <link rel="stylesheet" href="${ctxStatic}/js/highlight/styles/vs.css">
 <script src="${ctxStatic}/js/highlight/highlight.pack.js" type="text/javascript"></script>
 
+
+<script src="${ctxStatic}/js/ajaxFileUpload/ajaxfileupload.js" type="text/javascript"></script>
+
+
 <script>
     layui.config({
         version: "3.0.0"

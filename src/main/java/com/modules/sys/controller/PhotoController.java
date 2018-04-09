@@ -6,9 +6,11 @@ import com.modules.sys.mapper.Photo;
 import com.modules.sys.mapper.User;
 import com.modules.sys.service.PhotoService;
 import com.modules.sys.service.UserService;
+import com.qiniu.storage.model.DefaultPutRet;
 import com.utils.DateUtils;
 import com.utils.FileUploadUtil;
 import com.utils.JsonMapper;
+import com.utils.QiNiuUploadUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -52,21 +54,23 @@ public class PhotoController {
         HashMap<Object, Object> dataMap = Maps.newHashMap();
         String yearMonth = DateUtils.formatDate(new Date(), "yyyyMM");
         try{
-            String imagePath = FileUploadUtil.uploadImage(request, response, DirectoryName);
+            DefaultPutRet defaultPutRet = QiNiuUploadUtil.QinNiu2(request, "photos");
+         //   String imagePath = FileUploadUtil.uploadImage(request, response, DirectoryName);
             hashMap.put("code", 0);
             /*dataMap.put("src", request.getContextPath() + property + imagePath);
             hashMap.put("data", dataMap);*/
-            String imageName = yearMonth + property + imagePath.substring(imagePath.lastIndexOf(property)+1, imagePath.length());
+            //String imageName = yearMonth + property + imagePath.substring(imagePath.lastIndexOf(property)+1, imagePath.length());
             //图片插入数据库中
             Photo photo = new Photo();
             photo.setUserName(user.getUserName());
-            photo.setImageName(imageName);
+            photo.setImageName(defaultPutRet.hash);
             photo.setType("个人相册");
+            photo.setKeyHash(defaultPutRet.hash);
             photoService.insert(photo);
             String toJson = JsonMapper.getInstance().toJson(hashMap);
             return toJson;
         }catch (Exception e){
-            hashMap.put("code", 0);
+            hashMap.put("code", 1);
             hashMap.put("msg", "图片上传出错, 请联系管理员！");
             String toJson = JsonMapper.getInstance().toJson(hashMap);
             return toJson;

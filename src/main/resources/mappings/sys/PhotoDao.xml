@@ -16,7 +16,8 @@
         a.create_user AS "createUser",
         a.type AS "type",
         a.userName AS "userName",
-        a.image_Name AS "imageName"
+        a.image_Name AS "imageName",
+        a.key_hash AS "keyHash"
     </sql>
 
     <select id="get" resultType="com.modules.sys.mapper.Photo">
@@ -44,7 +45,8 @@
         create_user,
         userName,
         type,
-        image_Name
+        image_Name,
+        key_hash
         )
         VALUES
         (
@@ -53,7 +55,8 @@
         #{createUser},
         #{userName},
         #{type},
-        #{imageName}
+        #{imageName},
+        #{keyHash}
         )
     </insert>
 
@@ -67,7 +70,8 @@
         create_user = #{createUser},
         userName = #{userName},
         type = #{type},
-        image_Name = #{imageName}
+        image_Name = #{imageName},
+        key_hash = #{keyHash}
         WHERE id = #{id}
     </update>
 
