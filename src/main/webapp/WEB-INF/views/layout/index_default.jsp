@@ -8,15 +8,6 @@
 		<sitemesh:head/>
 		<script type="text/javascript">
 			$(document).ready(function() {
-				/*layui.use('code', function(){ //加载code模块
-                    //引用code方法
-					layui.code({
-                        about: false,
-                        height: '400px'
-					});
-				});*/
-
-                $('pre').each(function(i, e) {hljs.highlightBlock(e)});  //代码高亮
 				layui.use('flow', function(){
 					var flow = layui.flow;
 					//当你执行这样一个方法时，即对页面中的全部带有lay-src的img元素开启了懒加载（当然你也可以指定相关img）
@@ -47,9 +38,17 @@
 				</li>
 				<li id="article" class="layui-nav-item">
 					<a href="${ctx}/article/all/p1${urlSuffix}">文章</a>
+					<dl class="layui-nav-child">
+						<dd><a href="${ctx}/article/java/p1${urlSuffix}">JAVA</a></dd>
+						<dd><a href="${ctx}/article/sql/p1${urlSuffix}">数据库</a></dd>
+						<dd><a href="${ctx}/article/html/p1${urlSuffix}">HTML</a></dd>
+					</dl>
 				</li>
 				<li id="time" class="layui-nav-item">
-					<a href="${ctx}/time${urlSuffix}">时光轴</a>
+					<a href="${ctx}/time${urlSuffix}">&nbsp;&nbsp;时光轴</a>
+				</li>
+				<li id="liuyan" class="layui-nav-item">
+					<a href="${ctx}/liuyan${urlSuffix}">留言板</a>
 				</li>
 				<c:choose>
 					<c:when test="${sessionScope.sessionInfo.userName != null}">
@@ -79,28 +78,29 @@
 			</ul>
 		</div>
 	</div>
-	<div class="fly-panel fly-column">
-		<div class="layui-container">
-			<ul class="layui-clear">
-				<li class="layui-hide-xs layui-this"><a href="/">首页</a></li>
-				<li id="java"><a href="${ctx}/article/java/p1${urlSuffix}">JAVA</a></li>
-				<li id="sql"><a href="${ctx}/article/sql/p1${urlSuffix}">数据库&nbsp;&nbsp;<span class="layui-badge-dot"></span></a></li>
-				<li id="html"><a href="${ctx}/article/html/p1${urlSuffix}">HTML</a></li>
-				<!-- 用户登入后显示 -->
-				<c:choose>
-					<c:when test="${sessionScope.sessionInfo.userName != null}">
-						<li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
-						<li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="user/index.html">我发表的贴</a></li>
-						<li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="user/index.html#collection">我收藏的贴</a></li>
-					</c:when>
-				</c:choose>
-			</ul>
-			<div class="fly-column-right layui-hide-xs" style="padding-right: 25px;">
-				<span class="fly-search"><i class="layui-icon"></i></span>
-				<a href="${ctx}/article/publish" class="layui-btn">发表文章</a>
-			</div>
-		</div>
-	</div>
+	<%--	<div class="fly-panel fly-column">
+            <div class="layui-container">
+                <ul class="layui-clear">
+                    <li class="layui-hide-xs layui-this"><a href="/">首页</a></li>
+                    <li id="java"><a href="${ctx}/article/java/p1${urlSuffix}">JAVA</a></li>
+                    <li id="sql"><a href="${ctx}/article/sql/p1${urlSuffix}">数据库&nbsp;&nbsp;<span class="layui-badge-dot"></span></a></li>
+                    <li id="html"><a href="${ctx}/article/html/p1${urlSuffix}">HTML</a></li>
+                    <!-- 用户登入后显示 -->
+                    <c:choose>
+                        <c:when test="${sessionScope.sessionInfo.userName != null}">
+                            <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
+                            <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="user/index.html">我发表的贴</a></li>
+                            <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="user/index.html#collection">我收藏的贴</a></li>
+                        </c:when>
+                    </c:choose>
+                </ul>
+                <div class="fly-column-right layui-hide-xs" style="padding-right: 25px;">
+                    <span class="fly-search"><i class="layui-icon"></i></span>
+                    <a href="${ctx}/article/publish" class="layui-btn">发表文章</a>
+                </div>
+            </div>
+        </div>--%>
+	<div class="fly-panel"></div>
 	<sitemesh:body/>
 	<div class="fly-footer">
 		<p><a href="http://fly.layui.com/" target="_blank">Fly社区</a> 2017 &copy; <a href="http://www.layui.com/" target="_blank">layui.com 出品</a></p>

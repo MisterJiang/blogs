@@ -126,7 +126,7 @@ public class ArticleController {
             String toJson = JsonMapper.getInstance().toJson(hashMap);
             return toJson;
         }catch (Exception e){
-            hashMap.put("code", 0);
+            hashMap.put("code", 1);
             hashMap.put("msg", "图片上传出错, 请联系管理员！");
             String toJson = JsonMapper.getInstance().toJson(hashMap);
             return toJson;
@@ -142,5 +142,17 @@ public class ArticleController {
         uiModel.addAttribute("timeLineList", timeLineList);
         uiModel.addAttribute("navigation", "time");
         return "modules/blogs/time";
+    }
+
+
+    @RequestMapping(value = "liuyan${urlSuffix}")
+    public String liuyan(Model uiModel, HttpServletRequest request, HttpServletResponse response){
+
+
+
+
+        uiModel.addAttribute("navigation", "liuyan");
+
+        return "modules/blogs/liuyan";
     }
 }

@@ -24,6 +24,10 @@
 <script src="${ctxStatic}/js/ajaxFileUpload/ajaxfileupload.js" type="text/javascript"></script>
 
 
+<script src="${ctxStatic}/js/wangEditor/wangEditor.min.js" type="text/javascript"></script>
+
+
+
 <script>
     layui.config({
         version: "3.0.0"
