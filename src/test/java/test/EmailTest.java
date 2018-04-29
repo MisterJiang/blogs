@@ -1,10 +1,14 @@
 package test;
 
 import ch.qos.logback.classic.gaffer.PropertyUtil;
+import com.interfaceService.webService.WebServiceDemo;
+import com.modules.blogs.mapper.Article;
+import com.modules.blogs.service.ArticleService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -29,6 +33,8 @@ import java.util.Properties;
         "classpath:mybatis-config.xml",
         "classpath:ehcache.xml"})
 public class EmailTest {
+    @Autowired
+    private ArticleService articleService;
 
     @Test
     public void aaa(){

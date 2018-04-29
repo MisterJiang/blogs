@@ -54,7 +54,13 @@
 
     <!--用来设定Listener接口-->
     <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+        <!--<listener-class>
+
+            org.springframework.web.context.ContextLoaderListener
+
+        </listener-class>-->
+        <listener-class>com.interfaceService.webListen.WebListen</listener-class>
+
     </listener>
     <!-- 防止Spring内存溢出监听器  -->
     <listener>
