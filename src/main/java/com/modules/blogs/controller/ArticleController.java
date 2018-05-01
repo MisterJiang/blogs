@@ -60,8 +60,8 @@ public class ArticleController {
                           @PathVariable String type,
                           @PathVariable Integer page,
                           Model uiModel){
-       // SecurityUtils.sessionInfo();
-    	System.out.println("");
+     //   SecurityUtils.sessionInfo();
+    	
         Article article = new Article();
         PageInfo<Article> pageList = articleService.findPageList(article, page, limit);
         uiModel.addAttribute("pageList", pageList);
