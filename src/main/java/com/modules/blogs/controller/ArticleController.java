@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -58,7 +60,8 @@ public class ArticleController {
                           @PathVariable String type,
                           @PathVariable Integer page,
                           Model uiModel){
-     //   SecurityUtils.sessionInfo();
+       // SecurityUtils.sessionInfo();
+    	System.out.println("");
         Article article = new Article();
         PageInfo<Article> pageList = articleService.findPageList(article, page, limit);
         uiModel.addAttribute("pageList", pageList);
