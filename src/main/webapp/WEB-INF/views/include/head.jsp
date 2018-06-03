@@ -17,14 +17,15 @@
 <%--<link rel="stylesheet" href="${ctxStatic}/js/highlight/styles/default.css">
 <link rel="stylesheet" href="${ctxStatic}/js/highlight/styles/solarized-light.css">
 --%>
-<link rel="stylesheet" href="${ctxStatic}/js/highlight/styles/vs.css">
+<%--<link rel="stylesheet" href="${ctxStatic}/js/highlight/styles/vs.css">--%>
+<link rel="stylesheet" href="${ctxStatic}/js/highlight/styles/railscasts.css">
 <script src="${ctxStatic}/js/highlight/highlight.pack.js" type="text/javascript"></script>
 
 
 <script src="${ctxStatic}/js/ajaxFileUpload/ajaxfileupload.js" type="text/javascript"></script>
 
-
-<script src="${ctxStatic}/js/wangEditor/wangEditor.min.js" type="text/javascript"></script>
+<%--
+<script src="${ctxStatic}/js/wangEditor/wangEditor.min.js" type="text/javascript"></script>--%>
 
 
 

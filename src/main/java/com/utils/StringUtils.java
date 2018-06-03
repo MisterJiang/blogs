@@ -16,6 +16,7 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
     public static final String NUMBERS_AND_LETTERS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -178,7 +179,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
                 keyOrValueQuote = "\"";
             }
 
-            HashMap keyAndValueMap = new HashMap();
+            HashMap<String, String> keyAndValueMap = new HashMap<String, String>();
             String[] keyAndValueArray = source.split(valueEntitySeparator);
             if(keyAndValueArray != null) {
                 String[] arr$ = keyAndValueArray;
@@ -202,7 +203,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     public static Map<String, String> parseKeyAndValueToMap(String source) {
         return parseKeyAndValueToMap(source, ":", ",", "\"");
     }
-
+    
     public static String RemoveBothSideSymbol(String source, String symbol) {
         if(!isEmpty(source) && !isEmpty(symbol)) {
             int firstIndex = source.indexOf(symbol);

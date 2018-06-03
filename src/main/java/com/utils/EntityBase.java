@@ -1,14 +1,16 @@
 package com.utils;
 
-import java.util.Date;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.util.Date;
 
 public class EntityBase {
 
     private String id;
     private Date createTime;
     private String createUser;
-
 
     public String getId() {
         return id;

@@ -150,12 +150,12 @@ public class ArticleController {
 
     @RequestMapping(value = "liuyan${urlSuffix}")
     public String liuyan(Model uiModel, HttpServletRequest request, HttpServletResponse response){
-
-
-
-
         uiModel.addAttribute("navigation", "liuyan");
-
         return "modules/blogs/liuyan";
+    }
+
+    @RequestMapping(value = "demo")
+    public String demo(Model uiModel, HttpServletRequest request, HttpServletResponse response){
+        return "modules/blogs/demo";
     }
 }

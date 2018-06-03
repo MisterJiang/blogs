@@ -17,9 +17,9 @@ import javax.xml.ws.Endpoint;
 //发布接口
 public class WebListen extends ContextLoaderListener{
 
-    public void contextInitialized(ServletContextEvent event) {
+    /*public void contextInitialized(ServletContextEvent event) {
         String address="http://localhost:8081/webServiceDemo";
         Endpoint.publish(address, new WebServiceDemoImpl());
         super.contextInitialized(event);
-    }
+    }*/
 }

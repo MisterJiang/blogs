@@ -119,6 +119,12 @@ public class UserController {
         return "modules/sys/article";
     }
 
+    //文章
+    @RequestMapping(value = "article/add")
+    public String articleAdd(Model uiModel, HttpServletRequest request, HttpServletResponse response){
+        return "modules/sys/articleAdd";
+    }
+
     //文章列表
     @RequestMapping(value = "articleList")
     @ResponseBody

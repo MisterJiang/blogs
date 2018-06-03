@@ -2,10 +2,14 @@ package com.modules.sys.mapper;
 
 import com.utils.EntityBase;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2018/2/8.
  */
-public class User extends EntityBase {
+public class User extends EntityBase implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String userName;
     private String password;

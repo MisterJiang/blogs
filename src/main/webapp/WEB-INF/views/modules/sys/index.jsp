@@ -138,6 +138,9 @@
             <dd>
               <a class="hp-tab-add" hp-href="${ctx}/sys/article" href="javascript:;">文章列表</a>
             </dd>
+            <dd>
+              <a class="hp-tab-add" hp-href="${ctx}/sys/article/add" href="javascript:;">文章添加</a>
+            </dd>
           </dl>
         </li>
 
