@@ -139,7 +139,7 @@ public class LuceneUtils {
 
 
     public static void main(String[] args) {
-      LuceneUtils.searchIndex("E:\\\\GIT\\\\blogs\\\\src\\\\main\\\\resources\\\\luceneIndex\\\\article_tb", "百度");
+      LuceneUtils.searchIndex("E:\\\\GIT\\\\blogs\\\\src\\\\main\\\\resources\\\\luceneIndex\\\\article_tb", "重要");
 
 
 

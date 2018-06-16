@@ -1,0 +1,26 @@
+{
+  "tableNames": ["table1", "table2", "table3"],
+
+  "table1": {
+    "driverClassName": "com.mysql.jdbc.Driver",
+    "url" :"jdbc:mysql://localhost:3306/blogs?useUnicode=true&characterEncoding=UTF-8",
+    "username":"root",
+    "password":"123456"
+  },
+
+  "table2": {
+    "driverClassName": "com.mysql.jdbc.Driver",
+    "url" :"jdbc:mysql://localhost:3306/blogs?useUnicode=true&characterEncoding=UTF-8",
+    "username":"root",
+    "password":"123456"
+  },
+
+  "table3": {
+    "driverClassName": "com.mysql.jdbc.Driver",
+    "url" :"jdbc:mysql://localhost:3306/blogs?useUnicode=true&characterEncoding=UTF-8",
+    "username":"root",
+    "password":"123456"
+  }
+
+
+}
